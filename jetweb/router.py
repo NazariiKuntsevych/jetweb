@@ -1,9 +1,10 @@
 """
-Provides router for managing routes, and exception handlers.
+Provides router for managing routes, middlewares, and exception handlers.
 """
 
 from __future__ import annotations
 
+from inspect import isclass
 from typing import Callable, Iterable
 
 from .routes import RouteTable
@@ -13,24 +14,48 @@ class Router:
     """
     Router for managing request handling.
 
-    Supports route, and exception handler registration.
+    Supports route, middleware and exception handler registration.
 
     :param prefix: Optional URL prefix for all routes.
     """
 
     def __init__(self, prefix: str = None):
         self.prefix = prefix or ""
+        self.middlewares = []
         self.exception_handlers = {}
         self.route_table = RouteTable()
 
     def include(self, router: Router) -> None:
         """
-        Include routes, and handlers from another router.
+        Include routes, middlewares, and handlers from another router.
 
         :param router: Router for including.
         """
+        self.middlewares.extend(router.middlewares)
         self.exception_handlers.update(router.exception_handlers)
         self.route_table.include(self.prefix, router.route_table)
+
+    def add_middleware(self, middleware: Callable) -> None:
+        """
+        Register a middleware.
+
+        :param middleware: Middleware.
+        :raises ValueError: If middleware is not callable.
+        """
+        if isclass(middleware):
+            middleware = middleware()
+
+        if not callable(middleware):
+            raise ValueError("Middleware must be callable")
+
+        self.middlewares.append(middleware)
+
+    def middleware(self, middleware: Callable) -> Callable:
+        """
+        Decorator for registering middleware.
+        """
+        self.add_middleware(middleware)
+        return middleware
 
     def add_exception_handler(self, status: int, exception_handler: Callable) -> None:
         """
