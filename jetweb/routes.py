@@ -63,7 +63,7 @@ class RouteTable:
         """
         for route in self.routes:
             if route.endpoint == endpoint:
-                if method in route.methods:
+                if method in route.methods or "*" in route.methods:
                     return route.handler
                 raise HTTPException(status=405)
         raise HTTPException(status=404)

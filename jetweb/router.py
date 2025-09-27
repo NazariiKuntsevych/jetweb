@@ -7,6 +7,7 @@ from __future__ import annotations
 from inspect import isclass
 from typing import Callable, Iterable
 
+from .handlers import BaseHandler
 from .routes import RouteTable
 
 
@@ -86,8 +87,15 @@ class Router:
         :param endpoint: Route endpoint.
         :param handler: Request handler.
         :param methods: Allowed request methods.
-        :raises ValueError: If handler is not callable.
+        :raises ValueError: If class-based handler is not subclass of BaseHandler or handler is not callable.
         """
+        if isclass(handler):
+            if not issubclass(handler, BaseHandler):
+                raise ValueError("Class-based handler must be subclass of BaseHandler")
+
+            handler = handler().dispatch
+            methods = ["*"]
+
         if not callable(handler):
             raise ValueError("Handler must be callable")
 
