@@ -5,13 +5,12 @@ from wsgiref.simple_server import make_server
 from .exceptions import HTTPException
 from .request import Request
 from .response import Response
-from .routes import RouteTable
+from .router import Router
 
 
-class JetWeb:
-    def __init__(self, debug: bool = False):
-        self.exception_handlers = {}
-        self.route_table = RouteTable()
+class JetWeb(Router):
+    def __init__(self, prefix: str = None, debug: bool = False):
+        super().__init__(prefix=prefix)
         self.debug = debug
 
     def __call__(self, environ: dict, start_response: Callable) -> Iterable[bytes]:
@@ -33,9 +32,3 @@ class JetWeb:
             print(f"Running on http://{host}:{port}/", file=sys.stderr)
             print("Don't use this server in production", file=sys.stderr)
             server.serve_forever()
-
-    def add_exception_handler(self, status: int, exception_handler: Callable) -> None:
-        self.exception_handlers[status] = exception_handler
-
-    def add_route(self, endpoint: str, handler: Callable, methods: Iterable[str] = None) -> None:
-        self.route_table.add_route(endpoint, handler, methods)

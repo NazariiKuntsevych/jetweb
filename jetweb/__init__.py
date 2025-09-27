@@ -3,6 +3,7 @@ from .datastructures import CaseInsensitiveDict
 from .exceptions import HTTPException
 from .request import Request
 from .response import Response
+from .router import Router
 
 __all__ = [
     "JetWeb",
@@ -10,4 +11,5 @@ __all__ = [
     "HTTPException",
     "Request",
     "Response",
+    "Router",
 ]

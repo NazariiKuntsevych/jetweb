@@ -10,15 +10,21 @@ class RouteTable:
     def __init__(self):
         self.routes = []
 
+    def include(self, prefix: str, route_table: RouteTable) -> None:
+        for route in route_table.routes:
+            self.routes.append(
+                Route(endpoint=prefix + route.endpoint, handler=route.handler, methods=route.methods)
+            )
+
     def add_route(
-        self, endpoint: str, handler: Callable, methods: Union[Iterable[str], None] = None
+        self, prefix: str, endpoint: str, handler: Callable, methods: Union[Iterable[str], None] = None
     ) -> None:
         methods = [method.upper() for method in (methods or ["GET"])]
         if "GET" in methods:
             methods.append("OPTIONS")
 
         self.routes.append(
-            Route(endpoint=endpoint, handler=handler, methods=methods)
+            Route(endpoint=prefix + endpoint, handler=handler, methods=methods)
         )
 
     def find_handler(self, endpoint: str, method: str) -> Callable:
