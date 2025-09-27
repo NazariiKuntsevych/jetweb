@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from json import loads
 from urllib.parse import parse_qsl
@@ -24,6 +26,15 @@ class Request:
 
         return loads(self.body)
 
+    @classmethod
+    def from_environ(cls, environ: dict) -> Request:
+        return cls(
+            method=environ["REQUEST_METHOD"],
+            endpoint=environ["PATH_INFO"],
+            query_params=parse_query_params(environ),
+            headers=parse_headers(environ),
+            body=parse_body(environ),
+        )
 
 def parse_query_params(environ: dict) -> CaseInsensitiveDict:
     return CaseInsensitiveDict(parse_qsl(environ["QUERY_STRING"], True))
@@ -45,13 +56,3 @@ def parse_body(environ: dict) -> bytes:
     content_length = int(environ.get("CONTENT_LENGTH") or 0)
     readable = environ["wsgi.input"]
     return readable.read(content_length)
-
-
-def make_request(environ: dict) -> Request:
-    return Request(
-        method=environ["REQUEST_METHOD"],
-        endpoint=environ["PATH_INFO"],
-        query_params=parse_query_params(environ),
-        headers=parse_headers(environ),
-        body=parse_body(environ),
-    )
