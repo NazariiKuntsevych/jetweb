@@ -14,7 +14,7 @@ class BaseHandler:
     Base class for class-based handlers.
     """
 
-    def dispatch(self, request: Request) -> Union[Response, object]:
+    def dispatch(self, request: Request, **path_params) -> Union[Response, object]:
         """
         Dispatch request to appropriate HTTP method handler.
 
@@ -24,5 +24,5 @@ class BaseHandler:
         """
         handler = getattr(self, request.method.lower(), None)
         if handler:
-            return handler(request)
+            return handler(request, **path_params)
         raise HTTPException(status=405)

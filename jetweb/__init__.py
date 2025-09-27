@@ -1,4 +1,5 @@
 from .application import JetWeb
+from .converters import BaseConverter, converter
 from .datastructures import CaseInsensitiveDict
 from .exceptions import HTTPException
 from .handlers import BaseHandler
@@ -8,6 +9,8 @@ from .router import Router
 
 __all__ = [
     "JetWeb",
+    "BaseConverter",
+    "converter",
     "CaseInsensitiveDict",
     "HTTPException",
     "BaseHandler",

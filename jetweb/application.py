@@ -83,8 +83,8 @@ class JetWeb(Router):
         :param request: Request object.
         :returns: Response object.
         """
-        handler = self.route_table.find_handler(request.endpoint, request.method)
-        return handler(request)
+        handler, path_params = self.route_table.find_handler(request.endpoint, request.method)
+        return handler(request, **path_params)
 
     def handle_exception(self, exception: BaseException) -> Response:
         """
