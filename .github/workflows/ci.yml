@@ -1,0 +1,27 @@
+name: Linter
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.x"
+
+    - name: Install dependencies
+      run: |
+        pip install ruff
+
+    - name: Run linter
+      run: |
+        ruff check .
