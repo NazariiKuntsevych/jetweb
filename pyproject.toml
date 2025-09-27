@@ -8,3 +8,27 @@ authors = [
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = [
+    "ruff==0.13.0",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",       # code style
+    "F",       # code errors
+    "W",       # warnings
+    "I",       # sorting
+    "N",       # naming
+    "ANN",     # annotations
+    "Q",       # quotes
+]
+ignore = [
+    "ANN002",  # annotations for *args
+    "ANN003",  # annotations for **kwargs
+    "ANN204",  # return annotations for magic methods
+]
