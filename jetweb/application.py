@@ -8,9 +8,8 @@ from wsgiref.simple_server import make_server
 
 from .context import Context
 from .exceptions import HTTPException
-from .request import Request
-from .response import Response
-from .router import Router
+from .http import Request, Response
+from .routing import Router
 
 
 class JetWeb(Router):

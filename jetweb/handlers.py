@@ -6,7 +6,7 @@ from typing import Union
 
 from .context import Context
 from .exceptions import HTTPException
-from .response import Response
+from .http import Response
 
 
 class BaseHandler:
