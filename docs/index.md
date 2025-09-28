@@ -1,6 +1,6 @@
-<p align="center">
+<div align="center">
     <img src="images/logo.png">
-</p>
+</div>
 
 ![Supported Python Version](https://img.shields.io/badge/python-3.8%20|%203.9%20|%203.10%20|%203.11%20|%203.12%20|%203.13-blue)
 
