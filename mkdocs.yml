@@ -1,0 +1,46 @@
+site_name: Jetweb
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+  features:
+    - navigation.top
+    - toc.integrate
+    - content.code.copy
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+      - scripts/generate_api_reference.py
+  - literate-nav:
+      nav_file: reference.md
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: sphinx
+            show_root_toc_entry: false
+
+nav:
+  - Home: index.md
+  - Overview: overview.md
+  - Tutorial:
+      - Request Handlers: tutorial/request-handlers.md
+      - Path Parameters: tutorial/path-parameters.md
+      - Exception Handlers: tutorial/exception-handlers.md
+      - Middlewares: tutorial/middlewares.md
+      - Context: tutorial/context.md
+      - Routers: tutorial/routers.md
+      - Next Steps: tutorial/next-steps.md
+  - Reference:
+      - Code Structure: reference/code-structure.md
+      - API: reference/api/

@@ -1,0 +1,30 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.13"
+
+    - name: Install dependencies
+      run: |
+        pip install --editable .[dev]
+
+    - name: Deploy documentation
+      run: |
+        mkdocs gh-deploy --force
