@@ -4,11 +4,11 @@ Provides HTTPException class for error handling.
 
 from __future__ import annotations
 
-import traceback
 from dataclasses import dataclass
 from http import HTTPStatus
 
-from .response import Response
+from .http import Response
+from .utils import format_exception
 
 
 @dataclass
@@ -38,13 +38,3 @@ class HTTPException(Response, Exception):  # noqa: N818
             content=format_exception(exception) if catch_traceback else None,
             status=500,
         )
-
-
-def format_exception(exception: BaseException) -> str:
-    """
-    Format exception with traceback as a string.
-
-    :param exception: Original exception.
-    :returns: Exception traceback.
-    """
-    return "".join(traceback.format_exception(type(exception), exception, exception.__traceback__))

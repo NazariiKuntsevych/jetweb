@@ -1,5 +1,5 @@
 """
-Provides router for managing routes, middlewares, and exception handlers.
+Provides router class.
 """
 
 from __future__ import annotations
@@ -7,8 +7,8 @@ from __future__ import annotations
 from inspect import isclass
 from typing import Callable, Iterable
 
-from .handlers import BaseHandler
-from .routes import RouteTable
+from ..handlers import BaseHandler
+from .route_table import RouteTable
 
 
 class Router:
