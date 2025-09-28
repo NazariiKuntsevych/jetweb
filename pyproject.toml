@@ -5,6 +5,7 @@ description = "Lightweight Python WSGI-compatible web framework"
 authors = [
     {name = "Nazarii Kuntsevych", email = "kuntsevych.n.v@gmail.com"},
 ]
+readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.9"
