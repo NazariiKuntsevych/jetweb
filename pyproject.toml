@@ -17,6 +17,11 @@ dev = [
     "ruff==0.13.0",
 ]
 
+[tool.setuptools]
+packages = [
+    "jetweb",
+]
+
 [tool.ruff]
 line-length = 120
 
