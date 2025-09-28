@@ -1,4 +1,4 @@
-name: Linter
+name: Linter and tests
 
 on:
   pull_request:
@@ -25,3 +25,27 @@ jobs:
     - name: Run linter
       run: |
         ruff check .
+
+  tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          pip install --editable .[dev]
+
+      - name: Run tests
+        run: |
+          python3 -m pytest
